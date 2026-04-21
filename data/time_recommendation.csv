@@ -1,0 +1,48 @@
+dimension,value,label,total_flights,avg_delay_mins,delay_rate_pct,cancellation_rate,delay_score,recommendation
+hour,0,12 AM,109037,10.74,20.1,1.42,0.1324,Best
+hour,1,1 AM,25244,9.6,15.84,1.36,0.1145,Best
+hour,2,2 AM,603,6.2,15.59,2.65,0.0611,Best
+hour,3,3 AM,5,66.0,40.0,20.0,1.0,Avoid
+hour,4,4 AM,78,5.54,8.97,2.56,0.0507,Best
+hour,5,5 AM,407309,2.31,6.67,1.59,0.0,Best
+hour,6,6 AM,1275485,2.33,7.34,1.47,0.0003,Best
+hour,7,7 AM,1775181,3.98,9.85,1.33,0.0262,Best
+hour,8,8 AM,2029436,5.2,11.66,1.26,0.0454,Best
+hour,9,9 AM,1960229,6.58,13.99,1.18,0.067,Best
+hour,10,10 AM,1796429,8.25,16.32,1.24,0.0933,Best
+hour,11,11 AM,1842838,8.87,17.2,1.13,0.103,Best
+hour,12,12 PM,1615992,10.26,18.82,1.31,0.1248,Best
+hour,13,1 PM,1663176,11.2,20.14,1.26,0.1396,Best
+hour,14,2 PM,1611130,12.69,21.98,1.46,0.163,Best
+hour,15,3 PM,1660503,13.51,23.08,1.47,0.1759,Best
+hour,16,4 PM,1652242,14.81,24.23,1.67,0.1963,Best
+hour,17,5 PM,1636341,16.05,25.47,1.68,0.2157,Good
+hour,18,6 PM,1674744,17.78,27.3,1.81,0.2429,Good
+hour,19,7 PM,1652135,18.3,27.97,1.8,0.2511,Good
+hour,20,8 PM,1540372,18.03,27.79,2.0,0.2468,Good
+hour,21,9 PM,1177045,16.4,26.3,1.99,0.2212,Good
+hour,22,10 PM,1003919,14.74,23.83,1.95,0.1952,Best
+hour,23,11 PM,374456,13.24,22.68,1.42,0.1716,Best
+day_of_week,0,Monday,4230672,12.17,20.42,,0.827,Avoid
+day_of_week,1,Tuesday,4026215,9.54,17.76,,0.0,Best
+day_of_week,2,Wednesday,4068958,9.71,18.01,,0.0535,Best
+day_of_week,3,Thursday,4212218,11.99,20.67,,0.7704,Avoid
+day_of_week,4,Friday,4243214,12.72,21.49,,1.0,Avoid
+day_of_week,5,Saturday,3602944,10.55,18.63,,0.3176,Good
+day_of_week,6,Sunday,4099708,12.31,20.77,,0.8711,Avoid
+month,1,January,2198386,10.52,18.79,,0.3351,Good
+month,2,February,2032451,9.8,18.16,,0.2608,Good
+month,3,March,2375803,10.13,18.87,,0.2948,Good
+month,4,April,2318141,10.34,18.55,,0.3165,Good
+month,5,May,2436091,11.9,20.34,,0.4773,Fair
+month,6,June,2463125,16.14,24.89,,0.9144,Avoid
+month,7,July,2555624,16.97,25.16,,1.0,Avoid
+month,8,August,2552288,14.09,22.54,,0.7031,Avoid
+month,9,September,2369244,7.64,15.63,,0.0381,Best
+month,10,October,2470347,7.58,15.93,,0.032,Best
+month,11,November,2333265,7.27,15.52,,0.0,Best
+month,12,December,2379164,12.45,21.19,,0.534,Fair
+season,Fall,Fall,7172856,7.5,15.7,,0.0,Best
+season,Spring,Spring,7130035,10.8,19.27,,0.401,Good
+season,Winter,Winter,6610001,11.0,19.46,,0.4253,Good
+season,Summer,Summer,7571037,15.73,24.19,,1.0,Avoid
