@@ -807,3 +807,11 @@ hr {
 .upload-icon-big { font-size: 2.6rem; }
 .upload-title { color: var(--text-h); font-weight: 600; font-size: 1rem; }
 .upload-sub { color: var(--text-muted); font-size: 0.8rem; line-height: 1.5; max-width: 220px; }
+
+st.markdown("""
+    <style>
+    [data-testid="manage-app-button"] {
+        display: none !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
