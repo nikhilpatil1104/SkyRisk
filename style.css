@@ -809,16 +809,10 @@ hr {
 .upload-sub { color: var(--text-muted); font-size: 0.8rem; line-height: 1.5; max-width: 220px; }
 
 [data-testid="manage-app-button"],
-[data-testid="stAppDeployButton"],
-.stDeployButton,
-#MainMenu,
-footer,
-header [data-testid="stToolbar"],
-.viewerBadge_container__r5tak,
-.viewerBadge_link__qRIco,
-span[data-testid="manage-app-button"],
-div[class*="viewerBadge"],
-a[class*="viewerBadge"] {
+[data-testid="appCreatorAvatar"],
+[class*="_profileContainer"],
+[class*="_profilePreview"],
+[class*="_profileImage"] {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
