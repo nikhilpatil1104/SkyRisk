@@ -320,16 +320,26 @@ h1, h2, h3, h4 { color: var(--text-h) !important; }
 }
 [data-testid="stMetricDelta"] { font-size: 0.8rem !important; }
 
+/* FIX 2: Ensure metric delta arrows point correct direction */
+[data-testid="stMetricDelta"] svg { display: inline !important; }
+/* Streamlit uses data-direction attribute for delta arrow direction */
+[data-testid="stMetricDelta"][data-direction="down"] svg {
+    transform: rotate(0deg) !important;
+}
+[data-testid="stMetricDelta"][data-direction="up"] svg {
+    transform: rotate(0deg) !important;
+}
+
 /* ═══════════════════════════════════════════════════════════════
    BUTTONS
 ═══════════════════════════════════════════════════════════════ */
 .stButton > button {
     background: linear-gradient(135deg, #4a85e8 0%, #2563eb 50%, #1d4ed8 100%) !important;
-    color: #fff !important;
+    color: #ffffff !important;
     border: none !important;
     border-radius: var(--radius-sm) !important;
     font-family: var(--font-body) !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
     font-size: 0.92rem !important;
     padding: 0.65rem 1.5rem !important;
     transition: all 0.25s cubic-bezier(0.4,0,0.2,1) !important;
@@ -337,6 +347,16 @@ h1, h2, h3, h4 { color: var(--text-h) !important; }
     position: relative !important;
     overflow: hidden !important;
     letter-spacing: 0.3px !important;
+    -webkit-text-fill-color: #ffffff !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.25) !important;
+}
+/* Force all child text elements inside button to be white */
+.stButton > button p,
+.stButton > button span,
+.stButton > button div,
+.stButton > button * {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
 }
 .stButton > button::after {
     content: '';
@@ -354,7 +374,7 @@ h1, h2, h3, h4 { color: var(--text-h) !important; }
 .stButton > button:active { transform: translateY(0) !important; }
 
 /* ═══════════════════════════════════════════════════════════════
-   TABS
+   TABS — fully readable in both themes
 ═══════════════════════════════════════════════════════════════ */
 [data-testid="stTabs"] { border-bottom: 1px solid var(--border-subtle) !important; }
 [data-testid="stTabs"] button {
@@ -366,13 +386,40 @@ h1, h2, h3, h4 { color: var(--text-h) !important; }
     border-radius: 0 !important;
     transition: color 0.2s !important;
     letter-spacing: 0.2px !important;
+    opacity: 1 !important;
 }
-[data-testid="stTabs"] button:hover { color: var(--accent) !important; }
+[data-testid="stTabs"] button:hover {
+    color: var(--accent) !important;
+    opacity: 1 !important;
+}
+/* SELECTED TAB — always full opacity, always readable */
 [data-testid="stTabs"] button[aria-selected="true"] {
     color: var(--text-h) !important;
     border-bottom: 2.5px solid var(--accent) !important;
     background: transparent !important;
     font-weight: 700 !important;
+    opacity: 1 !important;
+}
+[data-testid="stTabs"] button[aria-selected="true"] p,
+[data-testid="stTabs"] button[aria-selected="true"] span,
+[data-testid="stTabs"] button[aria-selected="true"] div {
+    color: var(--text-h) !important;
+    opacity: 1 !important;
+}
+/* Light theme — selected tab explicit dark color */
+[data-theme="light"] [data-testid="stTabs"] button[aria-selected="true"] {
+    color: #0f172a !important;
+    opacity: 1 !important;
+    font-weight: 700 !important;
+    border-bottom: 2.5px solid #2563eb !important;
+}
+[data-theme="light"] [data-testid="stTabs"] button[aria-selected="false"] {
+    color: #64748b !important;
+    opacity: 0.85 !important;
+}
+[data-theme="light"] [data-testid="stTabs"] button:hover {
+    color: #2563eb !important;
+    opacity: 1 !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -606,6 +653,21 @@ hr {
 }
 [data-testid="stChatMessage"]:hover { box-shadow: 0 6px 28px rgba(0,0,0,0.18) !important; }
 
+/* FIX 1: Chat message text always readable — white in dark, dark in light */
+[data-testid="stChatMessage"] p,
+[data-testid="stChatMessage"] span,
+[data-testid="stChatMessage"] li,
+[data-testid="stChatMessage"] strong,
+[data-testid="stChatMessage"] em,
+[data-testid="stChatMessage"] div {
+    color: var(--text-h) !important;
+}
+/* Assistant bubble specifically — always high contrast */
+[data-testid="stChatMessage"][data-testid*="assistant"] p,
+[data-testid="stChatMessage"]:nth-child(even) p {
+    color: var(--text-h) !important;
+}
+
 [data-testid="stChatInput"] {
     background: var(--bg-card) !important;
     border: 1px solid var(--border-med) !important;
@@ -681,26 +743,29 @@ hr {
 ═══════════════════════════════════════════════════════════════ */
 .sb-hero {
     margin: -1.2rem -1rem 1.4rem;
-    height: 150px;
+    height: 210px;
     background: linear-gradient(160deg, #0c1840 0%, #142050 40%, #0a1428 100%);
     position: relative;
     overflow: hidden;
     display: flex;
     align-items: flex-end;
     padding: 18px 18px;
+    border-radius: 0;
 }
 .sb-hero-img {
     position: absolute;
     inset: 0;
-    background: url("https://images.unsplash.com/photo-1512316609839-ce289d3eba0a?w=500&q=70") center/cover no-repeat;
-    opacity: 0.2;
+    background: url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=85") center 50%/cover no-repeat;
+    opacity: 0.55;
+    width: 100%;
+    height: 100%;
 }
 .sb-hero::after {
     content: '';
     position: absolute;
     bottom: 0; left: 0; right: 0;
-    height: 70px;
-    background: linear-gradient(to top, var(--bg-mid), transparent);
+    height: 90px;
+    background: linear-gradient(to top, var(--bg-mid) 0%, rgba(10,20,40,0.6) 60%, transparent 100%);
 }
 .sb-hero-content { position: relative; z-index: 1; }
 .sb-logo-text {
@@ -781,6 +846,22 @@ hr {
     padding: 20px 24px;
     transition: background 0.4s;
 }
+/* Glass card text — always readable */
+.glass-card p,
+.glass-card span,
+.glass-card div,
+.glass-card * {
+    color: var(--text-h) !important;
+    -webkit-text-fill-color: var(--text-h) !important;
+    opacity: 1 !important;
+}
+[data-theme="light"] .glass-card p,
+[data-theme="light"] .glass-card span,
+[data-theme="light"] .glass-card div,
+[data-theme="light"] .glass-card * {
+    color: #0f172a !important;
+    -webkit-text-fill-color: #0f172a !important;
+}
 
 /* ═══════════════════════════════════════════════════════════════
    UPLOAD ZONE (Tab 1)
@@ -808,13 +889,167 @@ hr {
 .upload-title { color: var(--text-h); font-weight: 600; font-size: 1rem; }
 .upload-sub { color: var(--text-muted); font-size: 0.8rem; line-height: 1.5; max-width: 220px; }
 
-[data-testid="manage-app-button"],
-[data-testid="appCreatorAvatar"],
-[class*="_profileContainer"],
-[class*="_profilePreview"],
-[class*="_profileImage"] {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
+
+/* FIX 4: Light theme chat — force readable dark text */
+[data-theme="light"] [data-testid="stChatMessage"] {
+    background: #ffffff !important;
+    border-color: rgba(91,156,246,0.2) !important;
 }
+[data-theme="light"] [data-testid="stChatMessage"] p,
+[data-theme="light"] [data-testid="stChatMessage"] span,
+[data-theme="light"] [data-testid="stChatMessage"] li,
+[data-theme="light"] [data-testid="stChatMessage"] strong,
+[data-theme="light"] [data-testid="stChatMessage"] em,
+[data-theme="light"] [data-testid="stChatMessage"] div {
+    color: #0f172a !important;
+}
+
+/* FIX 4b: Light theme Clear chat button — make it visible and readable */
+[data-theme="light"] .stButton > button {
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+}
+
+/* FIX 4c: Light theme chat input text ── readable */
+[data-theme="light"] [data-testid="stChatInput"] textarea,
+[data-theme="light"] [data-testid="stChatInput"] input {
+    color: #0f172a !important;
+    background: #ffffff !important;
+}
+[data-theme="light"] [data-testid="stChatInput"] {
+    background: #ffffff !important;
+    border-color: rgba(91,156,246,0.35) !important;
+}
+[data-theme="light"] [data-testid="stChatInput"] textarea::placeholder {
+    color: #64748b !important;
+}
+
+
+/* FIX 5: Light theme tab selection — selected tab must be fully readable */
+[data-theme="light"] [data-testid="stTabs"] button {
+    color: #64748b !important;
+    background: transparent !important;
+}
+[data-theme="light"] [data-testid="stTabs"] button:hover {
+    color: #2563eb !important;
+}
+[data-theme="light"] [data-testid="stTabs"] button[aria-selected="true"] {
+    color: #0f172a !important;
+    font-weight: 700 !important;
+    border-bottom: 2.5px solid #2563eb !important;
+    background: transparent !important;
+    opacity: 1 !important;
+}
+/* Prevent fading on any interactive elements in light theme */
+[data-theme="light"] [data-testid="stTabs"] button[aria-selected="false"] {
+    opacity: 0.75 !important;
+    color: #64748b !important;
+}
+[data-theme="light"] [data-testid="stTabs"] button[aria-selected="true"] * {
+    opacity: 1 !important;
+    color: #0f172a !important;
+}
+
+
+/* Fix 3: Light theme buttons — nuclear override for white text */
+[data-theme="light"] .stButton > button,
+[data-theme="light"] .stButton > button:hover,
+[data-theme="light"] .stButton > button:focus,
+[data-theme="light"] .stButton > button:active {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    background: linear-gradient(135deg, #4a85e8 0%, #2563eb 50%, #1d4ed8 100%) !important;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3) !important;
+}
+[data-theme="light"] .stButton > button p,
+[data-theme="light"] .stButton > button span,
+[data-theme="light"] .stButton > button div,
+[data-theme="light"] .stButton > button em,
+[data-theme="light"] .stButton > button * {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Fix 3b: Dark theme buttons too — ensure consistent */
+[data-theme="dark"] .stButton > button,
+[data-theme="dark"] .stButton > button * {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Fix 3c: Streamlit's own base button overrides */
+[data-testid="baseButton-secondary"] * ,
+[data-testid="baseButton-primary"] * ,
+button[kind="primary"] *,
+button[kind="secondary"] * {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TAB FIX — NUCLEAR: selected tab always readable
+   Streamlit uses BaseWeb internally — target all variants
+═══════════════════════════════════════════════════════════ */
+
+/* Unselected tabs — muted but readable */
+[data-testid="stTabs"] [role="tab"] {
+    opacity: 1 !important;
+    color: var(--text-muted) !important;
+    -webkit-text-fill-color: var(--text-muted) !important;
+}
+
+/* Selected tab — full strength in dark theme */
+[data-testid="stTabs"] [role="tab"][aria-selected="true"] {
+    opacity: 1 !important;
+    color: var(--text-h) !important;
+    -webkit-text-fill-color: var(--text-h) !important;
+    font-weight: 700 !important;
+}
+[data-testid="stTabs"] [role="tab"][aria-selected="true"] p,
+[data-testid="stTabs"] [role="tab"][aria-selected="true"] span,
+[data-testid="stTabs"] [role="tab"][aria-selected="true"] * {
+    opacity: 1 !important;
+    color: var(--text-h) !important;
+    -webkit-text-fill-color: var(--text-h) !important;
+}
+
+/* Light theme — selected tab hard black */
+[data-theme="light"] [data-testid="stTabs"] [role="tab"][aria-selected="true"],
+[data-theme="light"] [data-testid="stTabs"] [role="tab"][aria-selected="true"] p,
+[data-theme="light"] [data-testid="stTabs"] [role="tab"][aria-selected="true"] span,
+[data-theme="light"] [data-testid="stTabs"] [role="tab"][aria-selected="true"] * {
+    color: #0f172a !important;
+    -webkit-text-fill-color: #0f172a !important;
+    opacity: 1 !important;
+    font-weight: 700 !important;
+}
+
+/* Light theme — unselected tabs */
+[data-theme="light"] [data-testid="stTabs"] [role="tab"][aria-selected="false"],
+[data-theme="light"] [data-testid="stTabs"] [role="tab"][aria-selected="false"] * {
+    color: #64748b !important;
+    -webkit-text-fill-color: #64748b !important;
+    opacity: 1 !important;
+}
+
+/* BaseWeb internal selector — Streamlit tab list item */
+[data-baseweb="tab-list"] [role="tab"][aria-selected="true"],
+[data-baseweb="tab-list"] [role="tab"][aria-selected="true"] * {
+    color: var(--text-h) !important;
+    -webkit-text-fill-color: var(--text-h) !important;
+    opacity: 1 !important;
+    font-weight: 700 !important;
+}
+[data-theme="light"] [data-baseweb="tab-list"] [role="tab"][aria-selected="true"],
+[data-theme="light"] [data-baseweb="tab-list"] [role="tab"][aria-selected="true"] * {
+    color: #0f172a !important;
+    -webkit-text-fill-color: #0f172a !important;
+    opacity: 1 !important;
+}
+[data-theme="light"] [data-baseweb="tab-list"] [role="tab"][aria-selected="false"],
+[data-theme="light"] [data-baseweb="tab-list"] [role="tab"][aria-selected="false"] * {
+    color: #64748b !important;
+    -webkit-text-fill-color: #64748b !important;
+    opacity: 1 !important;
+}
+

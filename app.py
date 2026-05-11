@@ -27,6 +27,53 @@ st.set_page_config(
 inject_styles()
 inject_theme_toggle()
 
+# ── Tab readability fix — injected directly to override Streamlit BaseWeb ──
+st.markdown("""
+<style>
+/* Selected tab — dark theme */
+[data-testid="stTabs"] [role="tab"][aria-selected="true"],
+[data-testid="stTabs"] button[aria-selected="true"],
+[data-baseweb="tab-list"] [role="tab"][aria-selected="true"] {
+    color: #eef2ff !important;
+    -webkit-text-fill-color: #eef2ff !important;
+    opacity: 1 !important;
+    font-weight: 700 !important;
+}
+[data-testid="stTabs"] [role="tab"][aria-selected="true"] *,
+[data-testid="stTabs"] button[aria-selected="true"] *,
+[data-baseweb="tab-list"] [role="tab"][aria-selected="true"] * {
+    color: #eef2ff !important;
+    -webkit-text-fill-color: #eef2ff !important;
+    opacity: 1 !important;
+}
+/* Unselected tabs — always visible, never faded to invisible */
+[data-testid="stTabs"] [role="tab"][aria-selected="false"],
+[data-testid="stTabs"] button[aria-selected="false"],
+[data-baseweb="tab-list"] [role="tab"][aria-selected="false"] {
+    opacity: 1 !important;
+}
+/* Light theme — hard dark text on selected */
+[data-theme="light"] [data-testid="stTabs"] [role="tab"][aria-selected="true"],
+[data-theme="light"] [data-testid="stTabs"] button[aria-selected="true"],
+[data-theme="light"] [data-baseweb="tab-list"] [role="tab"][aria-selected="true"],
+[data-theme="light"] [data-testid="stTabs"] [role="tab"][aria-selected="true"] *,
+[data-theme="light"] [data-testid="stTabs"] button[aria-selected="true"] * {
+    color: #0f172a !important;
+    -webkit-text-fill-color: #0f172a !important;
+    opacity: 1 !important;
+    font-weight: 700 !important;
+}
+/* Light theme unselected — medium grey, fully opaque */
+[data-theme="light"] [data-testid="stTabs"] [role="tab"][aria-selected="false"],
+[data-theme="light"] [data-testid="stTabs"] button[aria-selected="false"],
+[data-theme="light"] [data-testid="stTabs"] [role="tab"][aria-selected="false"] * {
+    color: #64748b !important;
+    -webkit-text-fill-color: #64748b !important;
+    opacity: 1 !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # ---------------------------------------------------------------------------
 # Load data
 # ---------------------------------------------------------------------------
@@ -353,9 +400,23 @@ with tab1:
 
         if r.get("current_fare"):
             f1, f2, f3 = st.columns(3)
-            trend_delta = r["fare_trend"] if r["fare_trend"] != "Stable" else None
+            # Fix: use numeric delta so Streamlit shows correct arrow direction
+            # Positive number = up arrow (Increasing), negative = down arrow (Decreasing)
+            raw_trend = r["fare_trend"]
+            if raw_trend == "Increasing":
+                trend_delta = f"↑ {raw_trend}"
+                trend_delta_num = 1.0   # positive → Streamlit up arrow
+            elif raw_trend == "Decreasing":
+                trend_delta = f"↓ {raw_trend}"
+                trend_delta_num = -1.0  # negative → Streamlit down arrow
+            else:
+                trend_delta = None
+                trend_delta_num = None
             f1.metric("Current Fare",   f"${r['current_fare']:.0f}")
-            f2.metric("Predicted Fare", f"${r['predicted_fare']:.0f}", delta=trend_delta)
+            f2.metric("Predicted Fare", f"${r['predicted_fare']:.0f}",
+                      delta=trend_delta_num,
+                      delta_color="inverse" if raw_trend == "Decreasing" else "normal",
+                      help=raw_trend)
             f3.metric("Booking Advice", r["fare_recommendation"])
 
         # Charts — theme-aware colors
@@ -480,7 +541,7 @@ with tab2:
     else:
         st.markdown("""
         <div class="glass-card" style="margin-bottom:18px">
-            <p style="color:var(--text-muted);font-size:0.88rem;margin:0">
+            <p style="color:var(--text-h);font-size:0.88rem;margin:0;-webkit-text-fill-color:var(--text-h)">
                 💡 Analyze a flight in <strong style="color:var(--accent)">Flight Analysis</strong> first for full context, or ask any general flight question below!
             </p>
         </div>
