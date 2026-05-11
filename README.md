@@ -300,21 +300,6 @@ SkyRisk/
     └── phase6_export_delay_predictions.py
 ```
 
----
-
-## 👥 Team
-
-**SkyRisk Analytics — DATA 603, University of Maryland Baltimore County**
-
-| Name | Role |
-|---|---|
-| Nikhil Patil | Flight Delay Prediction · Data Pipeline · ML Engineering · App Integration |
-| Sarika Thunipura | Fare Trend Prediction · Data Analysis |
-| Suhani Shah | Weather Data Analysis · Visualizations |
-| Madhurima Mukhopadhyay | Travel Risk Score Engine · Recommendation System |
-
----
-
 ## 📄 License
 
 Developed for academic purposes — DATA 603 Big Data Technologies, UMBC.
